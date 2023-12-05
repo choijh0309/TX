@@ -2,32 +2,27 @@ package com.codestates.member.service;
 
 import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
-import com.codestates.helper.EmailSender;
 import com.codestates.helper.event.MemberRegistrationEvent;
 import com.codestates.member.entity.Member;
 import com.codestates.member.repository.MemberRepository;
 import com.codestates.utils.CustomBeanUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.event.ApplicationContextEvent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
- *  - 메서드 구현
- *  - DI 적용
- *  - Spring Data JPA 적용
- *  - 트랜잭션 적용
+ * - 메서드 구현
+ * - DI 적용
+ * - Spring Data JPA 적용
+ * - 트랜잭션 적용
  */
 @Slf4j
 @Transactional
@@ -61,7 +56,7 @@ public class MemberService {
          *  보낼 수 있습니다.
          *      - MemberService에서 회원 등록 이벤트를 비동기적으로 먼저 보내고 이 이벤트를 리스닝(Listening)하는 곳에서 이메일을 보낼 수 있습니다.
          *      - 이벤트 리스너(Event Listener)가 이메일을 보내고 실패할 경우 이미 저장된 회원 정보를 삭제할 수 있습니다.
-     *      - Spring에서는 @Async 애너테이션을 이용해서 비동기 작업을 손쉽게 처리할 수 있습니다.
+         *      - Spring에서는 @Async 애너테이션을 이용해서 비동기 작업을 손쉽게 처리할 수 있습니다.
          */
         publisher.publishEvent(new MemberRegistrationEvent(savedMember));
         return savedMember;
